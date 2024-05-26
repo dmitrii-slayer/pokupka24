@@ -23,6 +23,6 @@ public class UserAccount {
     @Column(name = "currency", nullable = false)
     private Currency currency;
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "is_active", nullable = false)
     private Boolean active;
 }

@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping(UserController.BASE_PATH)
+@RequestMapping(UserController.RESOURCE_PATH)
 @RestController
 public class UserController {
 
+    private static final String BASE_PATH = "/api/pokupka24";
     private static final String API_VERSION = "/v1";
     private static final String RESOURCE = "/users";
-
-    public static final String BASE_PATH = API_VERSION + RESOURCE;
+    public static final String RESOURCE_PATH = BASE_PATH + API_VERSION + RESOURCE;
 
     @Autowired
     private UserService userService;

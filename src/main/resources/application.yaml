@@ -11,12 +11,14 @@ spring:
       ddl-auto: none
   sql:
     init:
-      data-locations: classpath:sql/data.sql
       schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
+
 server:
   port: 13000
-  servlet:
-    context-path: /pokupka24
+#  servlet:
+#    context-path: /pokupka24
+
 management:
   endpoints:
     web:
