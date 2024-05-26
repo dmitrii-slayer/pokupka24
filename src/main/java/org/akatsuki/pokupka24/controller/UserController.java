@@ -2,6 +2,8 @@ package org.akatsuki.pokupka24.controller;
 
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
+import org.akatsuki.pokupka24.dto.UserDTO;
+import org.akatsuki.pokupka24.mapper.UserMapper;
 import org.akatsuki.pokupka24.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +25,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @GetMapping("/")
     public List<User> findAllUsers() {
         return userService.findAllUsers();
     }
 
     @GetMapping("/{userId}")
-    public User findUserById(@PathVariable("userId") UUID userId) {
-        return userService.findUserById(userId);
+    public UserDTO findUserById(@PathVariable("userId") UUID userId) {
+        return userMapper.toDTO(userService.findUserById(userId));
     }
 
     @PostMapping("/")

@@ -23,7 +23,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,beans,mappings
+        include: health,info,beans,mappings
   info:
     env:
       enabled: true
