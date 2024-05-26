@@ -1,10 +1,15 @@
 package org.akatsuki.pokupka24.domain.entity;
 
 import jakarta.persistence.*;
-import org.akatsuki.pokupka24.dictionary.Currency;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "user_account")
 public class UserAccount {
@@ -18,11 +23,12 @@ public class UserAccount {
     private UUID userId;
 
     @Column(name = "balance", nullable = false)
-    private Double balance;
+    private BigDecimal balance;
 
     @Column(name = "currency", nullable = false)
-    private Currency currency;
+    @Size(min = 3, max = 3)
+    private String currency;
 
     @Column(name = "is_active", nullable = false)
-    private Boolean active;
+    private Boolean is_active;
 }

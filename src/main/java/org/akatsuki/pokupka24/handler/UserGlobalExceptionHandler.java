@@ -1,5 +1,6 @@
-package org.akatsuki.pokupka24.handler.exception;
+package org.akatsuki.pokupka24.handler;
 
+import org.akatsuki.pokupka24.handler.exception.NoSuchUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package org.akatsuki.pokupka24.handler.exception;
+package org.akatsuki.pokupka24.handler;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -11,11 +11,12 @@ CREATE TABLE users (
 CREATE TABLE user_account (
   account_id UUID NOT NULL,
    user_id UUID NOT NULL,
-   balance DOUBLE PRECISION NOT NULL,
-   currency SMALLINT NOT NULL,
+   balance NUMERIC(20,2) NOT NULL,
+   currency VARCHAR(3) NOT NULL,
    is_active BOOLEAN NOT NULL,
-   CONSTRAINT pk_user_account PRIMARY KEY (account_id)
+   CONSTRAINT pk_user_account PRIMARY KEY (account_id),
+   CONSTRAINT fk_user_account_on_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
-ALTER TABLE user_account ADD CONSTRAINT FK_USER_ACCOUNT_ON_USER
-FOREIGN KEY (user_id) REFERENCES users (user_id);
+--ALTER TABLE user_account ADD CONSTRAINT FK_USER_ACCOUNT_ON_USER
+--FOREIGN KEY (user_id) REFERENCES users (user_id);
