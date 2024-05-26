@@ -30,5 +30,5 @@ public class UserAccount {
     private String currency;
 
     @Column(name = "is_active", nullable = false)
-    private Boolean is_active;
+    private Boolean isActive;
 }

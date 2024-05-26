@@ -1,9 +1,9 @@
 package org.akatsuki.pokupka24.dto;
 
 import lombok.Data;
+import org.akatsuki.pokupka24.dictionary.AccountCurrency;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.UUID;
 
 @Data
@@ -15,8 +15,8 @@ public class UserAccountDTO {
 
     private BigDecimal balance;
 
-    private Currency currency;
+    private AccountCurrency currency;
 
-    private Boolean is_active;
+    private Boolean isActive;
 
 }

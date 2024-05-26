@@ -6,8 +6,11 @@ import org.akatsuki.pokupka24.domain.repository.UserAccountRepository;
 import org.akatsuki.pokupka24.domain.repository.UserRepository;
 import org.akatsuki.pokupka24.handler.exception.NoSuchUserException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +24,8 @@ public class UserServiceImpl implements UserService {
     UserAccountRepository userAccountRepository;
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public Page<User> findUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override
@@ -48,5 +51,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserAccount> findUserAccounts(UUID userId) {
         return userAccountRepository.findAccountsByUserId(userId);
+    }
+
+    @Override
+    public UserAccount addUserAccount(UUID userId, UserAccount account) {
+        // не нужно так как есть FK constraint - обработать exception?
+//        if (userRepository.findById(userId).isEmpty()) {
+//            throw new NoSuchUserException(userId);
+//        }
+        account.setBalance(BigDecimal.ZERO.setScale(2)); // нужен setScale? и нужно ли вообще 0 ставить
+        account.setUserId(userId);
+        return userAccountRepository.save(account);
     }
 }

@@ -28,6 +28,10 @@ management:
     env:
       enabled: true
 
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+
 info:
   app:
     name: Pokupka24

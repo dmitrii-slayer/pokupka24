@@ -2,13 +2,15 @@ package org.akatsuki.pokupka24.service;
 
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
 
-    List<User> findAllUsers();
+    Page<User> findUsers(Pageable pageable);
 
     User findUserById(UUID userId);
 
@@ -17,5 +19,7 @@ public interface UserService {
     User updateUser(UUID userId, User user);
 
     List<UserAccount> findUserAccounts(UUID userId);
+
+    UserAccount addUserAccount(UUID userId, UserAccount account);
 
 }
