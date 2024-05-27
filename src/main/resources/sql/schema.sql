@@ -27,3 +27,15 @@ CREATE TABLE product (
    price NUMERIC(12,2),
    CONSTRAINT pk_product PRIMARY KEY (product_id)
 );
+
+CREATE TABLE purchase (
+  purchase_id UUID NOT NULL,
+   account_id UUID NOT NULL,
+   product_id UUID NOT NULL,
+   created_at TIMESTAMP NOT NULL,
+   CONSTRAINT pk_purchase PRIMARY KEY (purchase_id)
+);
+
+ALTER TABLE purchase ADD CONSTRAINT FK_PURCHASE_ON_ACCOUNT FOREIGN KEY (account_id) REFERENCES user_account (account_id);
+
+ALTER TABLE purchase ADD CONSTRAINT FK_PURCHASE_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES product (product_id);
