@@ -1,6 +1,7 @@
 package org.akatsuki.pokupka24.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +43,16 @@ public class UserController {
 
 
     @Operation(summary = "Поиск пользователей")
-    @GetMapping("/")
+    @ApiResponse(description = "Результат поиска",
+            responseCode = "200"
+
+//            c этой строкой не будет тела если не указать атрибут schema, поэтому ее надо закомментить
+//            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE),
+
+            // использовать возвращаемый тип метода для определения тела ответа
+//            useReturnTypeSchema = true // хз нужно ли, вроде и без нее работает хотя по умолчанию false
+    )
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<UserDTO>> findUsers(@ParameterObject Pageable pageable) {
         Page<User> users = userService.findUsers(pageable);
         return ResponseEntity.ok(new PageImpl<>(userMapper.toDTOList(users.getContent()), pageable, users.getTotalElements()));

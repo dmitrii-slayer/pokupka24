@@ -1,9 +1,9 @@
 package org.akatsuki.pokupka24.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.akatsuki.pokupka24.dictionary.AccountCurrency;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -26,8 +26,10 @@ public class UserAccount {
     private BigDecimal balance;
 
     @Column(name = "currency", nullable = false)
-    @Size(min = 3, max = 3)
-    private String currency;
+//    @Size(min = 3, max = 3) для String а не AccountCurrency
+    @Enumerated(EnumType.STRING)
+    // какой тип выбрать: String или мой Enum?
+    private AccountCurrency currency;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
