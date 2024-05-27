@@ -19,3 +19,11 @@ CREATE TABLE user_account (
 
 --ALTER TABLE user_account ADD CONSTRAINT FK_USER_ACCOUNT_ON_USER
 --FOREIGN KEY (user_id) REFERENCES users (user_id);
+
+CREATE TABLE product (
+  product_id UUID NOT NULL,
+   title VARCHAR(255) NOT NULL,
+   description VARCHAR(255),
+   price NUMERIC(12,2),
+   CONSTRAINT pk_product PRIMARY KEY (product_id)
+);
