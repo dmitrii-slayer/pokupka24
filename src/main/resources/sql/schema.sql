@@ -12,7 +12,6 @@ CREATE TABLE user_account (
   account_id UUID NOT NULL,
    user_id UUID NOT NULL,
    balance NUMERIC(20,2) NOT NULL,
-   currency VARCHAR(3) NOT NULL,
    is_active BOOLEAN NOT NULL,
    CONSTRAINT pk_user_account PRIMARY KEY (account_id),
    CONSTRAINT fk_user_account_on_user FOREIGN KEY (user_id) REFERENCES users (user_id)
