@@ -21,7 +21,7 @@ public class UserDTO {
     @Schema(example = "Сидоров")
     private String lastName;
 
-    @Schema(example = "test@mycompany.com")
+    @Schema(example = "john.doe@test.com")
     private String email;
 
     @Schema(example = "1990-05-26")

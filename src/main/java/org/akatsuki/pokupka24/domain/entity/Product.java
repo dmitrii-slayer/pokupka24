@@ -21,6 +21,7 @@ public class Product {
     @Column(name = "title", nullable = false)
     private String title;
 
+    // наверно можно избавиться от этого столбца
     @Column(name = "description")
     private String description;
 

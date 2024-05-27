@@ -11,6 +11,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "user_account")
+// account = счёт или аккаунт пользователя? разобраться что за сущность
 public class UserAccount {
 
     @Id

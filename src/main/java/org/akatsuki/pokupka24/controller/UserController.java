@@ -41,18 +41,17 @@ public class UserController {
     @Autowired
     private UserAccountMapper userAccountMapper;
 
-
     @Operation(summary = "Поиск пользователей")
     @ApiResponse(description = "Результат поиска",
             responseCode = "200"
 
-//            c этой строкой не будет тела если не указать атрибут schema, поэтому ее надо закомментить
+//            c этой строкой не будет тела если не указать атрибут schema, поэтому ее надо убрать
 //            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE),
 
             // использовать возвращаемый тип метода для определения тела ответа
 //            useReturnTypeSchema = true // хз нужно ли, вроде и без нее работает хотя по умолчанию false
     )
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<UserDTO>> findUsers(@ParameterObject Pageable pageable) {
         Page<User> users = userService.findUsers(pageable);
         return ResponseEntity.ok(new PageImpl<>(userMapper.toDTOList(users.getContent()), pageable, users.getTotalElements()));
@@ -65,7 +64,7 @@ public class UserController {
     }
 
     @Operation(summary = "Создание пользователя")
-    @PostMapping("/")
+    @PostMapping("")
     public UserDTO addUser(@RequestBody UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
         return userMapper.toDTO(userService.addUser(user));

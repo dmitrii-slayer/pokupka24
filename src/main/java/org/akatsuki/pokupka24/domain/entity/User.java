@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "users") // users так как user зарезервированное слово
 public class User {
 
     @Id

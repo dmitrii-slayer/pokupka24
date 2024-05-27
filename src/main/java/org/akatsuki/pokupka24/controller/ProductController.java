@@ -14,8 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @Tag(name = "Товары", description = "Операции по товарам")
 @RequestMapping(ProductController.RESOURCE_PATH)
@@ -34,10 +37,16 @@ public class ProductController {
     private ProductMapper productMapper;
 
     @Operation(summary = "Поиск товаров")
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<ProductDTO>> findProducts(@ParameterObject Pageable pageable) {
         Page<Product> products = productService.findProducts(pageable);
         return ResponseEntity.ok(new PageImpl<>(
                 productMapper.toDTOList(products.getContent()), pageable, products.getTotalElements()));
+    }
+
+    @Operation(summary = "Поиск товара по ID")
+    @GetMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductDTO findProductById(@PathVariable("productId") UUID id) {
+        return productMapper.toDTO(productService.findProductById(id));
     }
 }
