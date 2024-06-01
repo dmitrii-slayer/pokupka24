@@ -23,7 +23,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,beans,mappings
+        include: health,info,beans,mappings,loggers,prometheus,metrics
   info:
     env:
       enabled: true
