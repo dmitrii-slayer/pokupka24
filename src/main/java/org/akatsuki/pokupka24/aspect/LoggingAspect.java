@@ -1,11 +1,13 @@
 package org.akatsuki.pokupka24.aspect;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Aspect
 @Component
 public class LoggingAspect {
@@ -15,11 +17,31 @@ public class LoggingAspect {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         String methodName = methodSignature.getName();
 
-        System.out.println("Начинается выполнение метода " + methodName);
+        log.debug("Начинается выполнение метода {}", methodName);
 
         Object targetMethodResult = proceedingJoinPoint.proceed();
 
-        System.out.println("Закончилось выполнение метода " + methodName);
+        log.debug("Закончилось выполнение метода {}", methodName);
+
+        return targetMethodResult;
+    }
+
+    @Around("execution(* org.akatsuki.pokupka24.controller.*.*(..))")
+    public Object logSlowEndpointsAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+        String className = methodSignature.getDeclaringTypeName();
+        String methodName = methodSignature.getName();
+
+        long start = System.currentTimeMillis();
+
+        Object targetMethodResult = proceedingJoinPoint.proceed();
+
+        long finish = System.currentTimeMillis();
+
+        long duration = finish - start;
+        if (duration > 100) {
+            log.info("Execution took {} ms for {}.{}", duration, className, methodName);
+        }
         return targetMethodResult;
     }
 }

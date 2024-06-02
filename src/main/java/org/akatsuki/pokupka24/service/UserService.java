@@ -5,7 +5,6 @@ import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
@@ -18,7 +17,7 @@ public interface UserService {
 
     User updateUser(UUID userId, User user);
 
-    List<UserAccount> findUserAccounts(UUID userId);
+    UserAccount findUserAccount(UUID userId);
 
     UserAccount addUserAccount(UUID userId, UserAccount account);
 

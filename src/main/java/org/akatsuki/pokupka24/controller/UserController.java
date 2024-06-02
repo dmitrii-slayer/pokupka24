@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "Пользователи", description = "Операции по пользователям")
@@ -30,7 +29,7 @@ public class UserController {
     private static final String BASE_PATH = "/api/pokupka24";
     private static final String API_VERSION = "/v1";
     private static final String RESOURCE = "/users";
-    private static final String ACCOUNTS = "/accounts";
+    private static final String ACCOUNTS = "/account";
 
     public static final String RESOURCE_PATH = BASE_PATH + API_VERSION + RESOURCE;
 
@@ -59,29 +58,29 @@ public class UserController {
 
     @Operation(summary = "Поиск пользователя по ID")
     @GetMapping("/{userId}")
-    public UserDTO findUserById(@PathVariable("userId") UUID userId) {
-        return userMapper.toDTO(userService.findUserById(userId));
+    public ResponseEntity<UserDTO> findUserById(@PathVariable("userId") UUID userId) {
+        return ResponseEntity.ok(userMapper.toDTO(userService.findUserById(userId)));
     }
 
     @Operation(summary = "Создание пользователя")
     @PostMapping("")
-    public UserDTO addUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
-        return userMapper.toDTO(userService.addUser(user));
+        return ResponseEntity.ok(userMapper.toDTO(userService.addUser(user)));
     }
 
     @Operation(summary = "Редактирование пользователя")
     @PutMapping("/{userId}")
-    public UserDTO updateUser(@PathVariable("userId") UUID userId,
-                              @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("userId") UUID userId,
+                                              @RequestBody UserDTO userDTO) {
         User updatedUser = userService.updateUser(userId, userMapper.toEntity(userDTO));
-        return userMapper.toDTO(updatedUser);
+        return ResponseEntity.ok(userMapper.toDTO(updatedUser));
     }
 
-    @Operation(summary = "Поиск счетов по ID пользователя")
+    @Operation(summary = "Поиск счета по ID пользователя")
     @GetMapping("/{userId}" + ACCOUNTS)
-    public List<UserAccountDTO> findUserAccountsByUserId(@PathVariable("userId") UUID userId) {
-        return userAccountMapper.toDTOList(userService.findUserAccounts(userId));
+    public UserAccountDTO findUserAccountByUserId(@PathVariable("userId") UUID userId) {
+        return userAccountMapper.toDTO(userService.findUserAccount(userId));
     }
 
     @Operation(summary = "Создание счета пользователя")

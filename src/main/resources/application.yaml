@@ -6,6 +6,10 @@ spring:
     password: ''
     url: jdbc:h2:mem:pokupka24&serverTimezone=UTC;
     username: sa
+#  h2:
+#    console:
+#      enabled: true
+#      path: /console
   jpa:
     hibernate:
       ddl-auto: none
@@ -23,7 +27,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,beans,mappings,loggers,prometheus,metrics
+        include: "*"
+#        include: health,info,beans,mappings,loggers,prometheus,metrics
   info:
     env:
       enabled: true

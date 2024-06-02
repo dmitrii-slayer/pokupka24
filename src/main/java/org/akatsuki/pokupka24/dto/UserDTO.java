@@ -1,6 +1,7 @@
 package org.akatsuki.pokupka24.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class UserDTO {
     @Schema(example = "Сидоров")
     private String lastName;
 
+    @Email
     @Schema(example = "john.doe@test.com")
     private String email;
 

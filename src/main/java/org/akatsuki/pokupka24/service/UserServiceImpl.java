@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -48,8 +47,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserAccount> findUserAccounts(UUID userId) {
-        return userAccountRepository.findAccountsByUserId(userId);
+    public UserAccount findUserAccount(UUID userId) {
+        return userAccountRepository.findAccountByUser_UserId(userId);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
 //            throw new NoSuchUserException(userId);
 //        }
         account.setBalance(BigDecimal.ZERO.setScale(2)); // нужен setScale? и нужно ли вообще 0 ставить
-        account.setUserId(userId);
+        account.getUser().setUserId(userId);
         return userAccountRepository.save(account);
     }
 }
