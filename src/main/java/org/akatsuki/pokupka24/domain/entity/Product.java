@@ -1,6 +1,7 @@
 package org.akatsuki.pokupka24.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class Product {
     @Column(name = "product_id", nullable = false)
     private UUID productId;
 
+    @Size(max = 120)
     @Column(name = "title", nullable = false)
     private String title;
 
