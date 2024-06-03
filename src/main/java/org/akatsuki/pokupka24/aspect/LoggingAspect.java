@@ -28,10 +28,6 @@ public class LoggingAspect {
 
     @Around("execution(* org.akatsuki.pokupka24.controller.*.*(..))")
     public Object logSlowEndpointsAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-        String className = methodSignature.getDeclaringTypeName();
-        String methodName = methodSignature.getName();
-
         long start = System.currentTimeMillis();
 
         Object targetMethodResult = proceedingJoinPoint.proceed();
@@ -40,7 +36,8 @@ public class LoggingAspect {
 
         long duration = finish - start;
         if (duration > 100) {
-            log.info("Execution took {} ms for {}.{}", duration, className, methodName);
+            MethodSignature method = (MethodSignature) proceedingJoinPoint.getSignature();
+            log.info("Execution took {} ms for {}.{}", duration, method.getDeclaringTypeName(), method.getName());
         }
         return targetMethodResult;
     }
