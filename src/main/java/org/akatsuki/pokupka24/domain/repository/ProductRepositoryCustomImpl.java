@@ -32,12 +32,12 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     @Override
     public Page<Product> findByCriteria(ProductCriteriaDTO criteriaDTO, Pageable pageable) {
         JinqStream<Product> products = source.products(em);
-        if (!StringUtils.isEmpty(criteriaDTO.getTitleLike())) {
+        if (StringUtils.isNotBlank(criteriaDTO.getTitleLike())) {
             String titleLike = criteriaDTO.getTitleLike();
             // если в лямбде написать criteriaDTO.getTitleLike() то не будет работать
             products = products.where(p -> like(p.getTitle(), titleLike));
         }
-        if (!StringUtils.isEmpty(criteriaDTO.getDescriptionLike())) {
+        if (StringUtils.isNotBlank(criteriaDTO.getDescriptionLike())) {
             String descriptionLike = "%" + criteriaDTO.getDescriptionLike() + "%";
             products = products.where(p -> like(p.getDescription(), descriptionLike));
         }

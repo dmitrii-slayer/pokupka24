@@ -1,0 +1,16 @@
+1. add money method
+2. purchase smth method
+3. finish api and search by criteria
+3. cascade
+4. validation
+5. liquibase
+6. scheduled task
+7. improve swagger
+8. improve exception handling
+9. check pagination and sorting
+10. check db constraints
+11. log to file
+12. persistent db
+13. jpa metamodel
+14. find by criteria using querydsl
+15. find by criteria using specification
