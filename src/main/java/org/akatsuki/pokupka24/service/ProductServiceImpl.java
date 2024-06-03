@@ -32,4 +32,18 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findProductsByCriteria(ProductCriteriaDTO criteriaDTO, Pageable pageable) {
         return productRepository.findByCriteria(criteriaDTO, pageable);
     }
+
+    @Override
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product editProduct(UUID productId, Product product) {
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NoSuchProductException(productId);
+        }
+        product.setProductId(productId);
+        return productRepository.save(product);
+    }
 }

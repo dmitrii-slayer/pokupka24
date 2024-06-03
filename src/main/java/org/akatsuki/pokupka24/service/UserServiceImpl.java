@@ -1,11 +1,12 @@
 package org.akatsuki.pokupka24.service;
 
+import lombok.AllArgsConstructor;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.akatsuki.pokupka24.domain.repository.UserAccountRepository;
 import org.akatsuki.pokupka24.domain.repository.UserRepository;
+import org.akatsuki.pokupka24.handler.exception.NoSuchAccountException;
 import org.akatsuki.pokupka24.handler.exception.NoSuchUserException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,11 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private UserAccountRepository userAccountRepository;
 
     @Override
@@ -59,6 +59,25 @@ public class UserServiceImpl implements UserService {
 //        }
         account.setBalance(BigDecimal.ZERO.setScale(2)); // нужен setScale? и нужно ли вообще 0 ставить
         account.getUser().setUserId(userId);
+        return userAccountRepository.save(account);
+    }
+
+    @Override
+    public UserAccount updateUserAccount(UUID userId, UserAccount account) {
+        if (findUserAccount(userId) == null) {
+            throw new NoSuchAccountException("User " + userId + " does not have an account.");
+        }
+        account.getUser().setUserId(userId);
+        return userAccountRepository.save(account);
+    }
+
+//    Lock ??
+    @Override
+    public UserAccount addFunds(UUID accountId, BigDecimal addAmount) {
+        UserAccount account = userAccountRepository.findById(accountId)
+                .orElseThrow(() -> new NoSuchAccountException(accountId));
+        BigDecimal newBalance = account.getBalance().add(addAmount);
+        account.setBalance(newBalance);
         return userAccountRepository.save(account);
     }
 }

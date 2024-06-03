@@ -1,9 +1,9 @@
 CREATE TABLE users (
   user_id UUID NOT NULL,
-   username VARCHAR(255),
-   first_name VARCHAR(255),
-   last_name VARCHAR(255),
-   email VARCHAR(255),
+   username VARCHAR(24),
+   first_name VARCHAR(50),
+   last_name VARCHAR(50),
+   email VARCHAR(100),
    birth_date date NOT NULL,
    account_id UUID,
    CONSTRAINT pk_users PRIMARY KEY (user_id)
@@ -35,7 +35,7 @@ ALTER TABLE user_account ADD CONSTRAINT FK_USER_ACCOUNT_ON_USER FOREIGN KEY (use
 
 CREATE TABLE product (
   product_id UUID NOT NULL,
-   title VARCHAR(255) NOT NULL,
+   title VARCHAR(120) NOT NULL,
    description VARCHAR(255),
    price NUMERIC(12,2),
    CONSTRAINT pk_product PRIMARY KEY (product_id)
@@ -51,11 +51,14 @@ CREATE TABLE purchase (
 ALTER TABLE purchase ADD CONSTRAINT FK_PURCHASE_ON_ACCOUNT FOREIGN KEY (account_id) REFERENCES user_account (account_id);
 
 CREATE TABLE purchase_detail (
-  id UUID NOT NULL,
+--  id UUID NOT NULL,
    purchase_id UUID,
    product_id UUID,
-   CONSTRAINT pk_purchasedetail PRIMARY KEY (id)
+--   CONSTRAINT pk_purchasedetail PRIMARY KEY (id)
+   CONSTRAINT pk_purchasedetail PRIMARY KEY (purchase_id, product_id)
 );
+
+--ALTER TABLE purchase_detail ADD CONSTRAINT uc_purchase_detail_product_account UNIQUE (product_id, purchase_id);
 
 ALTER TABLE purchase_detail ADD CONSTRAINT FK_PURCHASEDETAIL_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES product (product_id);
 

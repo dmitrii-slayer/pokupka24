@@ -79,15 +79,23 @@ public class UserController {
 
     @Operation(summary = "Поиск счета по ID пользователя")
     @GetMapping("/{userId}" + ACCOUNTS)
-    public UserAccountDTO findUserAccountByUserId(@PathVariable("userId") UUID userId) {
-        return userAccountMapper.toDTO(userService.findUserAccount(userId));
+    public ResponseEntity<UserAccountDTO> findUserAccountByUserId(@PathVariable("userId") UUID userId) {
+        return ResponseEntity.ok(userAccountMapper.toDTO(userService.findUserAccount(userId)));
     }
 
     @Operation(summary = "Создание счета пользователя")
     @PostMapping("/{userId}" + ACCOUNTS)
-    public UserAccountDTO addUserAccount(@PathVariable("userId") UUID userId,
-                                         @RequestBody UserAccountDTO accountDTO) {
+    public ResponseEntity<UserAccountDTO> addUserAccount(@PathVariable("userId") UUID userId,
+                                                         @RequestBody UserAccountDTO accountDTO) {
         UserAccount userAccount = userService.addUserAccount(userId, userAccountMapper.toEntity(accountDTO));
-        return userAccountMapper.toDTO(userAccount);
+        return ResponseEntity.ok(userAccountMapper.toDTO(userAccount));
+    }
+
+    @Operation(summary = "Редактирование счета пользователя")
+    @PutMapping("/{userId}" + ACCOUNTS)
+    public ResponseEntity<UserAccountDTO> updateUserAccount(@PathVariable("userId") UUID userId,
+                                                            @RequestBody UserAccountDTO accountDTO) {
+        UserAccount updatedAccount = userService.updateUserAccount(userId, userAccountMapper.toEntity(accountDTO));
+        return ResponseEntity.ok(userAccountMapper.toDTO(updatedAccount));
     }
 }

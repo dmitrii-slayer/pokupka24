@@ -34,7 +34,7 @@ public class PurchaseController {
     private PurchaseMapper purchaseMapper;
 
     @Operation(summary = "Поиск покупок")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<PurchaseDTO>> findPurchases(@ParameterObject Pageable pageable) {
         Page<Purchase> purchases = purchaseService.findPurchases(pageable);
         return ResponseEntity.ok(new PageImpl<>(
@@ -42,12 +42,19 @@ public class PurchaseController {
     }
 
     @Operation(summary = "Поиск покупок по критериям")
-    @PostMapping(SEARCH)
+    @PostMapping(value = SEARCH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<PurchaseDTO>> findPurchasesByCriteria(
             @RequestBody PurchaseCriteriaDTO criteriaDTO,
             @ParameterObject Pageable pageable) {
         Page<Purchase> purchases = purchaseService.findPurchasesByCriteria(criteriaDTO, pageable);
         return ResponseEntity.ok(new PageImpl<>(
                 purchaseMapper.toDTOList(purchases.getContent()), pageable, purchases.getTotalElements()));
+    }
+
+    @Operation(summary = "Добавить покупку")
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PurchaseDTO> addPurchase(@RequestBody PurchaseDTO purchaseDTO) {
+        Purchase purchase = purchaseService.addPurchase(purchaseMapper.toEntity(purchaseDTO));
+        return ResponseEntity.ok(purchaseMapper.toDTO(purchase));
     }
 }

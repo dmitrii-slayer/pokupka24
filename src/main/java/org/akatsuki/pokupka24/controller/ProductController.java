@@ -45,8 +45,8 @@ public class ProductController {
 
     @Operation(summary = "Поиск товара по ID")
     @GetMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductDTO findProductById(@PathVariable("productId") UUID id) {
-        return productMapper.toDTO(productService.findProductById(id));
+    public ResponseEntity<ProductDTO> findProductById(@PathVariable("productId") UUID id) {
+        return ResponseEntity.ok(productMapper.toDTO(productService.findProductById(id)));
     }
 
     @Operation(summary = "Поиск товаров по критериям")
@@ -56,5 +56,20 @@ public class ProductController {
         Page<Product> products = productService.findProductsByCriteria(criteriaDTO, pageable);
         return ResponseEntity.ok(new PageImpl<>(
                 productMapper.toDTOList(products.getContent()), pageable, products.getTotalElements()));
+    }
+
+    @Operation(summary = "Добавление товара")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
+        Product product = productService.addProduct(productMapper.toEntity(productDTO));
+        return ResponseEntity.ok(productMapper.toDTO(product));
+    }
+
+    @Operation(summary = "Редактирование товара")
+    @PutMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDTO> editProduct(@PathVariable("productId") UUID productId,
+                                                  @RequestBody ProductDTO productDTO) {
+        Product product = productService.editProduct(productId, productMapper.toEntity(productDTO));
+        return ResponseEntity.ok(productMapper.toDTO(product));
     }
 }

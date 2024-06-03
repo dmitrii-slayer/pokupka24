@@ -10,4 +10,6 @@ public interface PurchaseService {
     Page<Purchase> findPurchases(Pageable pageable);
 
     Page<Purchase> findPurchasesByCriteria(PurchaseCriteriaDTO criteriaDTO, Pageable pageable);
+
+    Purchase addPurchase(Purchase purchase);
 }

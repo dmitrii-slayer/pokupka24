@@ -14,4 +14,8 @@ public interface ProductService {
     Product findProductById(UUID productId);
 
     Page<Product> findProductsByCriteria(ProductCriteriaDTO criteriaDTO, Pageable pageable);
+
+    Product addProduct(Product product);
+
+    Product editProduct(UUID productId, Product product);
 }

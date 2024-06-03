@@ -20,6 +20,8 @@ INSERT INTO purchase VALUES ('2e12b8bf-48d8-458d-95bb-7e78db89f3ee', '5c6d9c25-c
 INSERT INTO purchase VALUES ('7e26b023-0b5e-41bc-8669-519da588a764', 'b2d2918b-3464-4759-9fa8-a027d457fa6d', CURRENT_DATE - 183);
 
 --INSERT INTO purchase_detail (id, purchase_id, product_id)
-INSERT INTO purchase_detail VALUES (random_uuid(), '8243784f-e85f-47f8-be23-f9a45eb198ac', 'f362a52f-d038-4802-ba83-6a1216210898');
-INSERT INTO purchase_detail VALUES (random_uuid(), '2e12b8bf-48d8-458d-95bb-7e78db89f3ee', 'd392414c-0d9f-49e6-8ecc-72e79c453144');
-INSERT INTO purchase_detail VALUES (random_uuid(), '7e26b023-0b5e-41bc-8669-519da588a764', 'f362a52f-d038-4802-ba83-6a1216210898');
+--INSERT INTO purchase_detail VALUES (random_uuid(), '8243784f-e85f-47f8-be23-f9a45eb198ac', 'f362a52f-d038-4802-ba83-6a1216210898');
+--INSERT INTO purchase_detail (id, purchase_id, product_id)
+INSERT INTO purchase_detail VALUES ('8243784f-e85f-47f8-be23-f9a45eb198ac', 'f362a52f-d038-4802-ba83-6a1216210898');
+INSERT INTO purchase_detail VALUES ('2e12b8bf-48d8-458d-95bb-7e78db89f3ee', 'd392414c-0d9f-49e6-8ecc-72e79c453144');
+INSERT INTO purchase_detail VALUES ('7e26b023-0b5e-41bc-8669-519da588a764', 'f362a52f-d038-4802-ba83-6a1216210898');

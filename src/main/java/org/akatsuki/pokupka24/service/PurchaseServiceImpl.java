@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
 
@@ -22,5 +24,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public Page<Purchase> findPurchasesByCriteria(PurchaseCriteriaDTO criteriaDTO, Pageable pageable) {
         return purchaseRepository.findByCriteria(criteriaDTO, pageable);
+    }
+
+    @Override
+    public Purchase addPurchase(Purchase purchase) {
+        purchase.setCreatedAt(LocalDateTime.now());
+        return purchaseRepository.save(purchase);
     }
 }

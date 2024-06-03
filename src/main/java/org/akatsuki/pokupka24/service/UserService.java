@@ -5,6 +5,7 @@ import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface UserService {
@@ -20,5 +21,9 @@ public interface UserService {
     UserAccount findUserAccount(UUID userId);
 
     UserAccount addUserAccount(UUID userId, UserAccount account);
+
+    UserAccount updateUserAccount(UUID userId, UserAccount account);
+
+    UserAccount addFunds(UUID accountId, BigDecimal addAmount);
 
 }
