@@ -3,6 +3,7 @@ package org.akatsuki.pokupka24.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.akatsuki.pokupka24.domain.entity.Product;
+import org.akatsuki.pokupka24.dto.ProductCriteriaDTO;
 import org.akatsuki.pokupka24.dto.ProductDTO;
 import org.akatsuki.pokupka24.mapper.ProductMapper;
 import org.akatsuki.pokupka24.service.ProductService;
@@ -13,10 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -28,6 +26,7 @@ public class ProductController {
     private static final String BASE_PATH = "/api/pokupka24";
     private static final String API_VERSION = "/v1";
     private static final String RESOURCE = "/products";
+    private static final String SEARCH = "/search";
 
     public static final String RESOURCE_PATH = BASE_PATH + API_VERSION + RESOURCE;
 
@@ -48,5 +47,14 @@ public class ProductController {
     @GetMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductDTO findProductById(@PathVariable("productId") UUID id) {
         return productMapper.toDTO(productService.findProductById(id));
+    }
+
+    @Operation(summary = "Поиск товаров по критериям")
+    @PostMapping(value = SEARCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<ProductDTO>> findProductsByCriteria(@RequestBody ProductCriteriaDTO criteriaDTO,
+                                                                   @ParameterObject Pageable pageable) {
+        Page<Product> products = productService.findProductsByCriteria(criteriaDTO, pageable);
+        return ResponseEntity.ok(new PageImpl<>(
+                productMapper.toDTOList(products.getContent()), pageable, products.getTotalElements()));
     }
 }

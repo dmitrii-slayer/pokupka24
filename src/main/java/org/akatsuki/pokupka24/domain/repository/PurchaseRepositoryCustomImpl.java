@@ -28,10 +28,10 @@ public class PurchaseRepositoryCustomImpl implements PurchaseRepositoryCustom {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Purchase> query = cb.createQuery(Purchase.class);
         Root<Purchase> root = query.from(Purchase.class);
-//        if (!CollectionUtils.isEmpty(criteriaDTO.getAccountIdIn())) {
-//        }
-        query.select(root).where(root.get("userAccount").<UUID>get("accountId")
-                .in(criteriaDTO.getAccountIdIn()));
+        if (!CollectionUtils.isEmpty(criteriaDTO.getAccountIdIn())) {
+            query.select(root).where(root.get("userAccount").<UUID>get("accountId")
+                    .in(criteriaDTO.getAccountIdIn()));
+        }
         TypedQuery<Purchase> purchaseQuery = em.createQuery(query);
         List<Purchase> purchases = purchaseQuery.getResultList();
         return new PageImpl<>(purchases, pageable, purchases.size());

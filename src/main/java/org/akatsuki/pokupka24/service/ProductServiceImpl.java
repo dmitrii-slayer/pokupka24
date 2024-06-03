@@ -2,6 +2,7 @@ package org.akatsuki.pokupka24.service;
 
 import org.akatsuki.pokupka24.domain.entity.Product;
 import org.akatsuki.pokupka24.domain.repository.ProductRepository;
+import org.akatsuki.pokupka24.dto.ProductCriteriaDTO;
 import org.akatsuki.pokupka24.handler.exception.NoSuchProductException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,5 +26,10 @@ public class ProductServiceImpl implements ProductService {
     public Product findProductById(UUID productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new NoSuchProductException(productId));
+    }
+
+    @Override
+    public Page<Product> findProductsByCriteria(ProductCriteriaDTO criteriaDTO, Pageable pageable) {
+        return productRepository.findByCriteria(criteriaDTO, pageable);
     }
 }
