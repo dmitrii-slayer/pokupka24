@@ -8,7 +8,6 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.akatsuki.pokupka24.domain.entity.Purchase;
-import org.akatsuki.pokupka24.domain.entity.Purchase_;
 import org.akatsuki.pokupka24.dto.PurchaseCriteriaDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -49,38 +48,6 @@ public class PurchaseRepositoryCustomImpl implements PurchaseRepositoryCustom {
         }
         if (criteriaDTO.getCreatedBefore() != null) {
             predicates.add(cb.lessThan(root.get("createdAt"), criteriaDTO.getCreatedBefore()));
-        }
-
-        query.select(root).where(predicates.toArray(Predicate[]::new));
-        query.orderBy(QueryUtils.toOrders(pageable.getSort(), root, cb));
-        TypedQuery<Purchase> purchaseQuery = em.createQuery(query);
-        List<Purchase> purchases = purchaseQuery.getResultList();
-        return new PageImpl<>(purchases, pageable, purchases.size());
-    }
-
-//    @Override
-    public Page<Purchase> findByCriteria2(PurchaseCriteriaDTO criteriaDTO, Pageable pageable) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Purchase> query = cb.createQuery(Purchase.class);
-        Root<Purchase> root = query.from(Purchase.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-
-//        if (!CollectionUtils.isEmpty(criteriaDTO.getAccountIdIn())) {
-//            predicates.add(root.get(Purchase_.userAccount)
-//                    .in(criteriaDTO.getAccountIdIn()));
-//        }
-        if (!CollectionUtils.isEmpty(criteriaDTO.getPurchaseIdIn())) {
-            predicates.add(root.get(Purchase_.purchaseId).in(criteriaDTO.getPurchaseIdIn()));
-        }
-//        if (!CollectionUtils.isEmpty(criteriaDTO.getProductIdIn())) {
-//            predicates.add(root.get(Purchase_.products).in(criteriaDTO.getProductIdIn()));
-//        }
-        if (criteriaDTO.getCreatedAfter() != null) {
-            predicates.add(cb.greaterThan(root.get(Purchase_.createdAt), criteriaDTO.getCreatedAfter()));
-        }
-        if (criteriaDTO.getCreatedBefore() != null) {
-            predicates.add(cb.lessThan(root.get(Purchase_.createdAt), criteriaDTO.getCreatedBefore()));
         }
 
         query.select(root).where(predicates.toArray(Predicate[]::new));
