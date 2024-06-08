@@ -1,6 +1,7 @@
 package org.akatsuki.pokupka24.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,10 +24,11 @@ public class Product {
     @Column(name = "title", nullable = false)
     private String title;
 
-    // наверно можно избавиться от этого столбца
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
 
+    @PositiveOrZero(message = "Price can't be less than 0!")
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 

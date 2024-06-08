@@ -1,6 +1,7 @@
 package org.akatsuki.pokupka24.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,6 +58,7 @@ public class Purchase {
 //                .collect(Collectors.toSet());
 //    }
 
+    @PastOrPresent
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

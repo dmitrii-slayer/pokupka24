@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserIncorrectData {
+public class ErrorResponse {
 
-    private String info;
+    private String message;
 
 }

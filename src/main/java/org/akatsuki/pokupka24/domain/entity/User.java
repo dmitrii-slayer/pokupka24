@@ -3,7 +3,7 @@ package org.akatsuki.pokupka24.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,9 +25,11 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
@@ -35,7 +37,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @NotNull
+    @PastOrPresent
     @Column(name = "birth_date")
     private LocalDate birthDate;
 

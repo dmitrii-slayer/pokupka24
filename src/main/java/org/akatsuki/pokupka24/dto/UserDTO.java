@@ -2,6 +2,7 @@ package org.akatsuki.pokupka24.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Past;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class UserDTO {
     @Schema(example = "john.doe@test.com")
     private String email;
 
+    @Past
     @Schema(example = "1990-05-26")
     private LocalDate birthDate;
 
