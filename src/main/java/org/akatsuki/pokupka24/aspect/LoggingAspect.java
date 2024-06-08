@@ -12,20 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    @Around("execution(* org.akatsuki.pokupka24.domain.repository.*.*(..))")
-    public Object logRepositoryAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-        String methodName = methodSignature.getName();
-
-        log.debug("Начинается выполнение метода {}", methodName);
-
-        Object targetMethodResult = proceedingJoinPoint.proceed();
-
-        log.debug("Закончилось выполнение метода {}", methodName);
-
-        return targetMethodResult;
-    }
-
     @Around("execution(* org.akatsuki.pokupka24.controller.*.*(..))")
     public Object logSlowEndpointsAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
