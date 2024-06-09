@@ -43,3 +43,11 @@ info:
     info: Shop. Smile. Repeat.
     author: Dima
   notApp: something
+
+task:
+  cron:
+#    birthday-present: 0 10 0 * * ?
+    birthday-present: 30 * * * * ?
+#    birthday-present: @midnight
+
+timezone: Europe/Moscow
