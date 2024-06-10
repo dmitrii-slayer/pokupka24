@@ -1,7 +1,6 @@
 package org.akatsuki.pokupka24.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,8 +25,7 @@ public class UserAccount {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @PositiveOrZero
-    @Column(name = "balance", nullable = false)
+    @Column(name = "balance", nullable = false, columnDefinition = "NUMERIC(12,2)")
     private BigDecimal balance;
 
     @Column(name = "is_active", nullable = false)

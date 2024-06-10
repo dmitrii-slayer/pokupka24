@@ -15,3 +15,4 @@
 14. find by criteria using querydsl
 15. find by criteria using specification
 16. my own metrics
+17. кто генерит id - клиент или приложение?

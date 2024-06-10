@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -34,6 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) {
+        user.setRegistrationDate(LocalDate.now());
         return userRepository.save(user);
     }
 
@@ -57,7 +60,7 @@ public class UserServiceImpl implements UserService {
 //        if (userRepository.findById(userId).isEmpty()) {
 //            throw new NoSuchUserException(userId);
 //        }
-        account.setBalance(BigDecimal.ZERO.setScale(2)); // нужен setScale? и нужно ли вообще 0 ставить
+        account.setBalance(BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY)); // нужен setScale? и нужно ли вообще 0 ставить
         account.getUser().setUserId(userId);
         return userAccountRepository.save(account);
     }
