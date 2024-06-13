@@ -27,7 +27,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="varchar(100)">
-                <constraints nullable="false"/>
+                <constraints unique="true" uniqueConstraintName="uc_user_email" nullable="false"/>
             </column>
             <column name="birth_date" type="date">
                 <constraints nullable="false"/>

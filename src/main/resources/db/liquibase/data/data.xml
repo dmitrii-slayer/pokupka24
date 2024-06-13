@@ -11,7 +11,7 @@
                 select count(1) from users
             </sqlCheck>
         </preConditions>
-        <sqlFile path="../data.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="../../data.sql" relativeToChangelogFile="true"/>
         <rollback>
             <delete tableName="purchase_detail"/>
             <delete tableName="product"/>

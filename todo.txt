@@ -8,16 +8,14 @@
 7. improve swagger
 8. improve exception handling
 9. check pagination and sorting
-10. check db constraints
+
 11. log to file
-12. persistent db
+
 13. jpa metamodel
 14. find by criteria using querydsl
 15. find by criteria using specification
 16. my own metrics (кол-во успешных регистраций сегодня, что еще?)
 17. кто генерит id - клиент или приложение?
 18. собирать статистику "самый популярный товар на этот день" - отдельный endpoint?
-19. liquibase check constraint (positive_price CHECK (price >= 0))
-20. liquibase foreign keys
-21. h2 db file relative path ./
+
 22. в каких случаях меняют существующий changeset, а не создают новый? (+ сюда же вопрос про runOnChange и runAlways)

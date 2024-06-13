@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS users (
    email VARCHAR(100) NOT NULL,
    birth_date date NOT NULL,
    registration_date date NOT NULL DEFAULT CURRENT_DATE,
-   CONSTRAINT pk_users PRIMARY KEY (user_id)
+   CONSTRAINT pk_users PRIMARY KEY (user_id),
+   CONSTRAINT uc_email UNIQUE (email);
 );
 
 --CREATE TABLE user_account (
