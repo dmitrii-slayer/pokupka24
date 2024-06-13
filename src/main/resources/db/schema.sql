@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS users (
   user_id UUID NOT NULL,
    username VARCHAR(30) NOT NULL,
-   first_name VARCHAR(50),
-   last_name VARCHAR(50),
+   first_name VARCHAR(50) NOT NULL,
+   last_name VARCHAR(50) NOT NULL,
    email VARCHAR(100) NOT NULL,
    birth_date date NOT NULL,
    registration_date date NOT NULL DEFAULT CURRENT_DATE,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS user_account (
    balance NUMERIC(12,2) NOT NULL,
    is_active BOOLEAN NOT NULL,
    CONSTRAINT pk_user_account PRIMARY KEY (account_id),
-   CONSTRAINT positive_balance CHECK (balance >= 0)
+   CONSTRAINT cc_positive_account_balance CHECK (balance >= 0)
 );
 
 ALTER TABLE user_account ADD CONSTRAINT uc_user_account_user UNIQUE (user_id);
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS product (
    description VARCHAR(255),
    price NUMERIC(12,2) NOT NULL	,
    CONSTRAINT pk_product PRIMARY KEY (product_id),
-   CONSTRAINT positive_price CHECK (price >= 0)
+   CONSTRAINT cc_positive_product_price CHECK (price >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS purchase (

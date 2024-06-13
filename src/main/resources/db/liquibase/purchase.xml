@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.28.xsd">
+
+    <changeSet id="create-table-purchase-1" author="dima">
+        <createTable tableName="purchase" ifNotExists="true">
+            <column name="purchase_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="pk_purchase" nullable="false"/>
+            </column>
+            <column name="account_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="purchase" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="fk-purchase-on-user-account-1" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_purchase_on_account" foreignKeyTableName="purchase"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="purchase" baseColumnNames="account_id"
+                                 constraintName="fk_purchase_on_account"
+                                 referencedTableName="user_account" referencedColumnNames="account_id"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="purchase" constraintName="fk_purchase_on_account"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

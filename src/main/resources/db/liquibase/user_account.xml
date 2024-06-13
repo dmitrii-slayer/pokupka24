@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.28.xsd">
+
+    <changeSet id="create-table-user-account-1" author="dima">
+        <createTable tableName="user_account" ifNotExists="true">
+            <column name="account_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="pk_user_account" nullable="false"/>
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints unique="true" uniqueConstraintName="uc_user_account_user" nullable="false"/>
+            </column>
+            <column name="balance" type="numeric(12,2)">
+<!--                <constraints checkConstraint="cc_positive_account_balance CHECK (balance >= 0)" nullable="false"/>-->
+<!--                тип изменения addCheckConstraint доступен только в liquibase pro и не поддерживает h2-->
+<!--                свой <sql> ?-->
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="boolean" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="user_account" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="fk-user-account-on-user-1" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_user_account_on_user" foreignKeyTableName="user_account"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="user_account" baseColumnNames="user_id"
+                                 constraintName="fk_user_account_on_user"
+                                 referencedTableName="users" referencedColumnNames="user_id"
+                                 onUpdate="RESTRICT" onDelete="RESTRICT"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="user_account" constraintName="fk_user_account_on_user"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="balance-positive-check-constraint-2" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+            <sqlCheck expectedResult="FALSE">select exists (
+                select 1 from information_schema.table_constraints
+                where constraint_name = 'cc_positive_account_balance' )
+            </sqlCheck>
+        </preConditions>
+        <sql dbms="h2">alter table user_account
+            add constraint cc_positive_account_balance
+            check (balance >= 0)
+        </sql>
+        <rollback>
+            <sql>alter table user_account
+                drop constraint cc_positive_account_balance
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <liqui.version>4.28.0</liqui.version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,6 +70,13 @@
             <groupId>org.jinq</groupId>
             <artifactId>jinq-jpa</artifactId>
             <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+<!--            4.24.0-->
+<!--            <version>${liquibase.version}</version> -->
+            <version>${liqui.version}</version>
         </dependency>
     </dependencies>
 
@@ -128,6 +136,18 @@
                     <apiDocsUrl>http://localhost:13000/v3/api-docs</apiDocsUrl>
                     <outputFileName>openapi.json</outputFileName>
                     <outputDir>${basedir}/src/main/resources/openapi</outputDir>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liqui.version}</version>
+                <configuration>
+                    <driver>org.h2.Driver</driver>
+                    <url>jdbc:h2:J:/h2/pokupka24;IFEXISTS=TRUE</url>
+                    <username>sa</username>
+                    <password />
+                    <outputChangeLogFile>src/main/resources/database/liquibase/liquibase-outputChangeLog.xml</outputChangeLogFile>
                 </configuration>
             </plugin>
         </plugins>

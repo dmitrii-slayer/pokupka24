@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.28.xsd">
+
+    <changeSet id="create-table-purchase-detail-1" author="dima">
+        <createTable tableName="purchase_detail" ifNotExists="true">
+            <column name="purchase_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="purchase_detail" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk-table-purchase-detail" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+            <not>
+                <primaryKeyExists primaryKeyName="pk_purchase_detail" tableName="purchase_detail"/>
+            </not>
+        </preConditions>
+        <addPrimaryKey tableName="purchase_detail" constraintName="pk_purchase_detail"
+                       columnNames="purchase_id, product_id"/>
+        <rollback>
+            <dropPrimaryKey tableName="purchase_detail"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="fk-purchase-detail-on-purchase-1" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_purchase_detail_on_purchase"
+                                            foreignKeyTableName="purchase_detail"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="purchase_detail" baseColumnNames="purchase_id"
+                                 constraintName="fk_purchase_detail_on_purchase"
+                                 referencedTableName="purchase" referencedColumnNames="purchase_id"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="purchase_detail" constraintName="fk_purchase_detail_on_purchase"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="fk-purchase-detail-on-product-1" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_purchase_detail_on_product"
+                                            foreignKeyTableName="purchase_detail"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="purchase_detail" baseColumnNames="product_id"
+                                 constraintName="fk_purchase_detail_on_product"
+                                 referencedTableName="product" referencedColumnNames="product_id"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="purchase_detail" constraintName="fk_purchase_detail_on_product"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

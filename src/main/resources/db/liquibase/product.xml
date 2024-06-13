@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.28.xsd">
+
+    <changeSet id="create-table-product-1" author="dima">
+        <createTable tableName="product" ifNotExists="true">
+            <column name="product_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="pk_product" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="numeric(12,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="product" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="price-positive-check-constraint-2" author="dima">
+        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">
+<!--            false не работает, надо именно FALSE-->
+            <sqlCheck expectedResult="FALSE">
+                select exists (select 1 from information_schema.table_constraints
+                where constraint_name = 'cc_positive_product_price')
+            </sqlCheck>
+        </preConditions>
+        <sql dbms="h2">alter table product
+            add constraint cc_positive_product_price
+            check (price >= 0)
+        </sql>
+        <rollback>
+            <sql>alter table product
+                drop constraint cc_positive_product_price
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

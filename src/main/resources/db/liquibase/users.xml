@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.28.xsd">
+
+    <changeSet id="create-table-users-1" author="dima">
+<!--        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="users"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+
+<!--        начиная с liquibase 4.26 можно использовать ifNotExists-->
+        <createTable tableName="users" ifNotExists="true">
+            <column name="user_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="pk_users" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_date" type="date" defaultValueComputed="current_date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="users" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+<!--    почему наши pk делают в отдельном changeset-е?-->
+
+<!--    <changeSet id="pk-table-users" author="dima">-->
+<!--        <preConditions onError="HALT" onFail="MARK_RAN" onSqlOutput="IGNORE">-->
+<!--            <not>-->
+<!--                <primaryKeyExists primaryKeyName="pk_users" tableName="users"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <addPrimaryKey tableName="users" columnNames="user_id" constraintName="pk_users"/>-->
+<!--        <rollback>-->
+<!--            <dropPrimaryKey tableName="users"/>-->
+<!--        </rollback>-->
+<!--    </changeSet>-->
+</databaseChangeLog>

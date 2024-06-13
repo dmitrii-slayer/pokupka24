@@ -19,11 +19,11 @@ public class UserDTO {
     @Schema(example = "noobslayer")
     private String username;
 
-    @Size(max = 50)
+    @Size(min = 2, max = 50)
     @Schema(example = "Валентин")
     private String firstName;
 
-    @Size(max = 50)
+    @Size(min = 2, max = 50)
     @Schema(example = "Сидоров")
     private String lastName;
 
