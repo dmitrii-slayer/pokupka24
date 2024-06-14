@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS users (
    birth_date date NOT NULL,
    registration_date date NOT NULL DEFAULT CURRENT_DATE,
    CONSTRAINT pk_users PRIMARY KEY (user_id),
-   CONSTRAINT uc_email UNIQUE (email);
+   CONSTRAINT uc_users_email UNIQUE (email),
+   CONSTRAINT uc_users_username UNIQUE (username);
 );
 
 --CREATE TABLE user_account (

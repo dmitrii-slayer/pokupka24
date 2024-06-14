@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 public class SleepAspect {
 
     // для тестирования логирования методов, которые выполняются > 100 мс
-    @Before("execution(* org.akatsuki.pokupka24.controller.*.find*(..))")
+    @Before("execution(* org.akatsuki.pokupka24.rest.controller.*.find*(..))")
     public void sleepBeforeFindAdvice() {
         try {
-            Thread.sleep(150L);
+            Thread.sleep(95L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

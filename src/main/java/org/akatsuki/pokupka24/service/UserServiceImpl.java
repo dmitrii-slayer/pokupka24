@@ -5,8 +5,7 @@ import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.akatsuki.pokupka24.domain.repository.UserAccountRepository;
 import org.akatsuki.pokupka24.domain.repository.UserRepository;
-import org.akatsuki.pokupka24.handler.exception.NoSuchAccountException;
-import org.akatsuki.pokupka24.handler.exception.NoSuchUserException;
+import org.akatsuki.pokupka24.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(UUID userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchUserException(userId));
+                .orElseThrow(() -> new NotFoundException("No user with ID: " + userId));
     }
 
     @Override
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(UUID userId, User user) {
         if (userRepository.findById(userId).isEmpty()) {
-            throw new NoSuchUserException(userId);
+            throw new NotFoundException("No user with ID: " + userId);
         }
         user.setUserId(userId);
         return userRepository.save(user);
@@ -60,7 +59,8 @@ public class UserServiceImpl implements UserService {
 //        if (userRepository.findById(userId).isEmpty()) {
 //            throw new NoSuchUserException(userId);
 //        }
-        account.setBalance(BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY)); // нужен setScale? и нужно ли вообще 0 ставить
+        // нужен setScale? и нужно ли вообще 0 ставить
+        account.setBalance(BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY));
         account.getUser().setUserId(userId);
         return userAccountRepository.save(account);
     }
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserAccount updateUserAccount(UUID userId, UserAccount account) {
         if (findUserAccount(userId) == null) {
-            throw new NoSuchAccountException("User " + userId + " does not have an account.");
+            throw new NotFoundException("User " + userId + " does not have an account.");
         }
         account.getUser().setUserId(userId);
         return userAccountRepository.save(account);
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserAccount addFunds(UUID accountId, BigDecimal addAmount) {
         UserAccount account = userAccountRepository.findById(accountId)
-                .orElseThrow(() -> new NoSuchAccountException(accountId));
+                .orElseThrow(() -> new NotFoundException("No account with ID: " + accountId));
         BigDecimal newBalance = account.getBalance().add(addAmount);
         account.setBalance(newBalance);
         return userAccountRepository.save(account);

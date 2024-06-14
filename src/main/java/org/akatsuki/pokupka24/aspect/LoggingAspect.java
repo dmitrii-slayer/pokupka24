@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    @Around("execution(* org.akatsuki.pokupka24.controller.*.*(..))")
+    @Around("execution(* org.akatsuki.pokupka24.rest.controller.*.*(..))")
     public Object logSlowEndpointsAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
 
