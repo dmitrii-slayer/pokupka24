@@ -2,14 +2,12 @@
 2. purchase smth method
 3. finish api and search by criteria
 3. cascade
-4. validation
-5. liquibase
+// 4. validation - норм ли делать валидацию только входящих дто в контроллере
+// 5. liquibase - дальше читать статьи
 6. scheduled task
 7. improve swagger
 8. improve exception handling
 9. check pagination and sorting
-
-11. log to file
 
 13. jpa metamodel
 14. find by criteria using querydsl
@@ -19,3 +17,4 @@
 18. собирать статистику "самый популярный товар на этот день" - отдельный endpoint?
 
 22. в каких случаях меняют существующий changeset, а не создают новый? (+ сюда же вопрос про runOnChange и runAlways)
+23. индексы - на username? что еще?

@@ -62,3 +62,7 @@ task:
 #    birthday-present: @midnight
 
 timezone: Europe/Moscow
+
+logging:
+  file:
+    name: target/system.log
