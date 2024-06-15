@@ -7,7 +7,6 @@
         <artifactId>pokupka24-rest-common</artifactId>
         <version>0.1.2</version>
     </parent>
-    <groupId>org.akatsuki</groupId>
     <artifactId>pokupka24-rest</artifactId>
     <version>0.1.2</version>
     <name>pokupka24-rest</name>
@@ -76,6 +75,10 @@
             <!--            4.24.0-->
             <!--            <version>${liquibase.version}</version> -->
             <version>${liqui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
         </dependency>
     </dependencies>
 
