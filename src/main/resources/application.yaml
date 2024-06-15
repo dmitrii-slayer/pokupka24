@@ -26,7 +26,7 @@ spring:
     url: jdbc:h2:./h2/pokupka24;IFEXISTS=TRUE
     user: sa
     password: ''
-#    contexts: dev
+#    contexts: ift с помощью контекстов можно например настроить выполнение changeset-ов только на определенных стендах
 #    enabled: false
 
 server:
@@ -56,10 +56,11 @@ info:
   notApp: something
 
 task:
-  cron:
-#    birthday-present: 0 10 0 * * ?
-    birthday-present: 30 * * * * ?
-#    birthday-present: @midnight
+  birthday-gift:
+    amount: 100.00
+    cron: 30 * * * * ?
+#    cron: 0 10 0 * * ?
+#    cron: @midnight
 
 timezone: Europe/Moscow
 

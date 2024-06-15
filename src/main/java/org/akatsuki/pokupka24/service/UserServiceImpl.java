@@ -1,6 +1,6 @@
 package org.akatsuki.pokupka24.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.akatsuki.pokupka24.domain.repository.UserAccountRepository;
@@ -16,12 +16,12 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private UserAccountRepository userAccountRepository;
+    private final UserRepository userRepository;
+    private final UserAccountRepository userAccountRepository;
 
     @Override
     public Page<User> findUsers(Pageable pageable) {

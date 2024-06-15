@@ -2,13 +2,13 @@ package org.akatsuki.pokupka24.rest.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.akatsuki.pokupka24.domain.entity.Purchase;
 import org.akatsuki.pokupka24.dto.PurchaseCriteriaDTO;
 import org.akatsuki.pokupka24.dto.PurchaseDTO;
 import org.akatsuki.pokupka24.mapper.PurchaseMapper;
 import org.akatsuki.pokupka24.service.PurchaseService;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Покупки", description = "Операции по покупкам")
 @RequestMapping(PurchaseController.RESOURCE_PATH)
 @RestController
+@RequiredArgsConstructor
 public class PurchaseController {
 
     private static final String BASE_PATH = "/api/pokupka24";
@@ -28,10 +29,8 @@ public class PurchaseController {
 
     public static final String RESOURCE_PATH = BASE_PATH + API_VERSION + RESOURCE;
 
-    @Autowired
-    private PurchaseService purchaseService;
-    @Autowired
-    private PurchaseMapper purchaseMapper;
+    private final PurchaseService purchaseService;
+    private final PurchaseMapper purchaseMapper;
 
     @Operation(summary = "Поиск покупок")
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.akatsuki.pokupka24.domain.entity.Purchase;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
@@ -29,8 +29,8 @@ import java.util.UUID;
 
 @Tag(name = "Пользователи", description = "Операции по пользователям")
 @RequestMapping(UserController.RESOURCE_PATH)
-@AllArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
     private static final String BASE_PATH = "/api/pokupka24";
@@ -40,10 +40,10 @@ public class UserController {
 
     public static final String RESOURCE_PATH = BASE_PATH + API_VERSION + RESOURCE;
 
-    private UserService userService;
-    private UserMapper userMapper;
-    private UserAccountMapper userAccountMapper;
-    private PurchaseMapper purchaseMapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final UserAccountMapper userAccountMapper;
+    private final PurchaseMapper purchaseMapper;
 
 
     @Operation(summary = "Поиск пользователей")
