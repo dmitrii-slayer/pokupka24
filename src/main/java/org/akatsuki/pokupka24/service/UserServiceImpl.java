@@ -9,6 +9,7 @@ import org.akatsuki.pokupka24.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -33,10 +34,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("No user with ID: " + userId));
     }
 
+    @Transactional
     @Override
     public User addUser(User user) {
         user.setRegistrationDate(LocalDate.now());
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        UserAccount userAccount = addUserAccount(savedUser);
+        savedUser.setUserAccount(userAccount);
+        return savedUser;
     }
 
     @Override
@@ -54,14 +59,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserAccount addUserAccount(UUID userId, UserAccount account) {
-        // не нужно так как есть FK constraint - обработать exception?
-//        if (userRepository.findById(userId).isEmpty()) {
-//            throw new NoSuchUserException(userId);
-//        }
+    public UserAccount addUserAccount(User user) {
+        UserAccount account = new UserAccount();
+        account.setUser(user);
+        account.setIsActive(true);
         // нужен setScale? и нужно ли вообще 0 ставить
         account.setBalance(BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY));
-        account.getUser().setUserId(userId);
         return userAccountRepository.save(account);
     }
 

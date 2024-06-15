@@ -83,14 +83,6 @@ public class UserController {
         return ResponseEntity.ok(userAccountMapper.toDTO(userService.findUserAccount(userId)));
     }
 
-    @Operation(summary = "Создание счета пользователя")
-    @PostMapping("/{userId}" + ACCOUNTS)
-    public ResponseEntity<UserAccountDTO> addUserAccount(@PathVariable("userId") UUID userId,
-                                                         @Valid @RequestBody UserAccountDTO accountDTO) {
-        UserAccount userAccount = userService.addUserAccount(userId, userAccountMapper.toEntity(accountDTO));
-        return ResponseEntity.ok(userAccountMapper.toDTO(userAccount));
-    }
-
     @Operation(summary = "Редактирование счета пользователя")
     @PutMapping("/{userId}" + ACCOUNTS)
     public ResponseEntity<UserAccountDTO> updateUserAccount(@PathVariable("userId") UUID userId,

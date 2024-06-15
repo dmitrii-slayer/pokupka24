@@ -20,7 +20,7 @@ public interface UserService {
 
     UserAccount findUserAccount(UUID userId);
 
-    UserAccount addUserAccount(UUID userId, UserAccount account);
+    UserAccount addUserAccount(User user);
 
     UserAccount updateUserAccount(UUID userId, UserAccount account);
 

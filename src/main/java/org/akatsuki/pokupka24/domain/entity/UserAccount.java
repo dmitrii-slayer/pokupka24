@@ -17,7 +17,7 @@ import java.util.UUID;
 public class UserAccount {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "account_id", nullable = false)
     private UUID accountId;
 

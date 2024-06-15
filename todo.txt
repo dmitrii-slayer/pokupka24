@@ -12,9 +12,14 @@
 13. jpa metamodel
 14. find by criteria using querydsl
 15. find by criteria using specification
+
 16. my own metrics (кол-во успешных регистраций сегодня, что еще?)
 17. кто генерит id - клиент или приложение?
 18. собирать статистику "самый популярный товар на этот день" - отдельный endpoint?
 
 22. в каких случаях меняют существующий changeset, а не создают новый? (+ сюда же вопрос про runOnChange и runAlways)
 23. индексы - на username? что еще?
+//24. убрать api метод на создание account -> сразу создавать account при создании пользователя
+чтоб не было пользователей без account - DONE
+
+25. подумать нужен ли async в scheduled task
