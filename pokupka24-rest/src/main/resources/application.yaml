@@ -23,7 +23,7 @@ spring:
   liquibase:
 #    change-log: classpath:db/liquibase/liquibase-outputChangeLog.xml
     changeLog: classpath:db/liquibase/changelog-root.xml
-    url: jdbc:h2:./h2/pokupka24;IFEXISTS=TRUE
+    url: jdbc:h2:./h2/pokupka24;AUTO_SERVER=TRUE
     user: sa
     password: ''
 #    contexts: ift с помощью контекстов можно например настроить выполнение changeset-ов только на определенных стендах
