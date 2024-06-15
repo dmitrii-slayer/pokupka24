@@ -28,6 +28,9 @@ spring:
     password: ''
 #    contexts: ift с помощью контекстов можно например настроить выполнение changeset-ов только на определенных стендах
 #    enabled: false
+  kafka:
+    bootstrap-servers: localhost:9092
+
 
 server:
   port: 13000
@@ -67,3 +70,7 @@ timezone: Europe/Moscow
 logging:
   file:
     name: target/system.log
+
+kafka:
+  topic:
+    purchases: pokupka24.purchases.v1
