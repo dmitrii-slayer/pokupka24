@@ -22,11 +22,11 @@ public class BirthdayGiftScheduler {
     private final UserRepository userRepository;
     private final UserService userService;
 
-    @Value("${task.birthday-gift.amount}")
+    @Value("${schedule.birthday-gift.amount}")
     private BigDecimal birthdayGiftAmount;
 
     // @Async ?
-    @Scheduled(cron = "${task.birthday-gift.cron}", zone = "${timezone}")
+    @Scheduled(cron = "${schedule.birthday-gift.cron}", zone = "${timezone}")
     public void sendBirthdayGift() {
         log.info("BirthdayGiftTask!!!");
 //        log.info("Birthday gift amount: {}", birthdayPresentAmount.toString());

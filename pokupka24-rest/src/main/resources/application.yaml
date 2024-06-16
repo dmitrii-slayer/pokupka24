@@ -58,7 +58,7 @@ info:
     author: Dima
   notApp: something
 
-task:
+schedule:
   birthday-gift:
     amount: 100.00
     cron: 30 * * * * ?
