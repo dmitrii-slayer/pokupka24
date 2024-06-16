@@ -17,6 +17,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +42,13 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<UserDTO> findUserById(@PathVariable("userId") UUID userId) {
-        return ResponseEntity.ok(userMapper.toDTO(userService.findUserById(userId)));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        try {
+//            Thread.sleep(6000L);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return ResponseEntity.ok(userMapper.toDTO(userService.findUserById(userId)));
     }
 
     @Override

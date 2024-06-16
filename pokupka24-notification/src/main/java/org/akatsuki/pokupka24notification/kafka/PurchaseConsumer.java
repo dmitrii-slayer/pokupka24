@@ -27,18 +27,18 @@ public class PurchaseConsumer {
             containerFactory = "purchaseListener")
     public void handle(@Payload PurchaseDTO purchase) {
         log.info("Вычитали сообщение: {}", purchase);
+
         log.info("Обращаемся к внешнему сервису...");
         UserDTO user = userClient.findUserById(purchase.getUserAccount().getUserId()).getBody();
         if (user != null) {
             log.info("Email пользователя: {}", user.getEmail());
+            // отправка email пользователю
+            Set<String> productsTitles = purchase.getProducts().stream()
+                    .map(ProductDTO::getTitle).collect(Collectors.toSet());
+            System.out.println("Поздравляем с покупкой: " + productsTitles);
         } else {
             log.warn("По покупке {} не удалось найти информацию о покупателе", purchase.getPurchaseId());
         }
-
-        // отправка email пользователю
-        Set<String> productsTitles = purchase.getProducts().stream()
-                .map(ProductDTO::getTitle).collect(Collectors.toSet());
-        System.out.println("Поздравляем с покупкой: " + productsTitles);
     }
 
 }
