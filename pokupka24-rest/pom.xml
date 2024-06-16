@@ -5,10 +5,10 @@
     <parent>
         <groupId>org.akatsuki</groupId>
         <artifactId>pokupka24-rest-common</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
     </parent>
     <artifactId>pokupka24-rest</artifactId>
-<!--    <version>0.1.2</version>-->
+<!--    <version>0.1.3</version>-->
     <name>pokupka24-rest</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>org.akatsuki</groupId>
             <artifactId>pokupka24-rest-api</artifactId>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

@@ -24,10 +24,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private static final String BASE_PATH = "/api/pokupka24";
-    private static final String API_VERSION = "/v1";
-    private static final String RESOURCE = "/products";
-    private static final String SEARCH = "/search";
+    public static final String BASE_PATH = "/api/pokupka24";
+    public static final String API_VERSION = "/v1";
+    public static final String RESOURCE = "/products";
+    public static final String SEARCH = "/search";
 
     public static final String RESOURCE_PATH = BASE_PATH + API_VERSION + RESOURCE;
 
