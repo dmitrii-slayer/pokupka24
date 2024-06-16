@@ -8,7 +8,7 @@
         <version>0.1.2</version>
     </parent>
     <artifactId>pokupka24-rest</artifactId>
-    <version>0.1.2</version>
+<!--    <version>0.1.2</version>-->
     <name>pokupka24-rest</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -38,11 +38,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,6 +74,12 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.akatsuki</groupId>
+            <artifactId>pokupka24-rest-api</artifactId>
+            <version>0.1.2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
