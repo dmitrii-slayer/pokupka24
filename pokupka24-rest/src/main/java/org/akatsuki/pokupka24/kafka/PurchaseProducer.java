@@ -2,6 +2,9 @@ package org.akatsuki.pokupka24.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.akatsuki.pokupka24.domain.entity.Purchase;
+import org.akatsuki.pokupka24.dto.PurchaseDTO;
+import org.akatsuki.pokupka24.mapper.PurchaseMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -14,20 +17,22 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class PurchaseProducer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final PurchaseMapper purchaseMapper;
 
     @Value("${kafka.topic.purchases}")
     private String topicName;
 
-    public void sendMessage(String message) {
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName, message);
+    public void sendMessage(Purchase purchase) {
+        PurchaseDTO purchaseDTO = purchaseMapper.toDTO(purchase);
+        CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topicName, purchaseDTO);
         future.whenComplete((result, ex) -> {
             if (ex == null) {
-                log.info("Sent message=[" + message +
+                log.info("Sent message=[" + purchaseDTO +
                         "] with offset=[" + result.getRecordMetadata().offset() + "]");
             } else {
                 log.error("Unable to send message=[" +
-                        message + "] due to : " + ex.getMessage());
+                        purchaseDTO + "] due to : " + ex.getMessage());
             }
         });
     }

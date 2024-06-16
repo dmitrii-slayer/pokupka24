@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.akatsuki.pokupka24.domain.entity.Purchase;
 import org.akatsuki.pokupka24.domain.repository.PurchaseRepository;
 import org.akatsuki.pokupka24.dto.PurchaseCriteriaDTO;
+import org.akatsuki.pokupka24.kafka.PurchaseProducer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 public class PurchaseServiceImpl implements PurchaseService {
 
     private PurchaseRepository purchaseRepository;
+    private PurchaseProducer purchaseProducer;
 
     @Override
     public Page<Purchase> findPurchases(Pageable pageable) {
@@ -32,6 +34,8 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public Purchase addPurchase(Purchase purchase) {
         purchase.setCreatedAt(LocalDateTime.now());
-        return purchaseRepository.save(purchase);
+        Purchase savedPurchase = purchaseRepository.save(purchase);
+        purchaseProducer.sendMessage(savedPurchase);
+        return savedPurchase;
     }
 }
