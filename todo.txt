@@ -23,3 +23,4 @@
 чтоб не было пользователей без account - DONE
 
 25. подумать нужен ли async в scheduled task
+26. aop - execution vs within

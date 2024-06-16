@@ -70,6 +70,8 @@ timezone: Europe/Moscow
 logging:
   file:
     name: target/system.log
+  executionTimeThreshold:
+    controller: 100
 
 kafka:
   topic:
