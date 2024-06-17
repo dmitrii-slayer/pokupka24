@@ -60,6 +60,7 @@ info:
 
 schedule:
   birthday-gift:
+    enabled: true
     amount: 100.00
     cron: 30 * * * * ?
 #    cron: 0 10 0 * * ?

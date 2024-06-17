@@ -22,18 +22,23 @@ public class BirthdayGiftScheduler {
     private final UserRepository userRepository;
     private final UserService userService;
 
+    @Value("${schedule.birthday-gift.enabled}")
+    private boolean enabled;
+
     @Value("${schedule.birthday-gift.amount}")
     private BigDecimal birthdayGiftAmount;
 
     // @Async ?
     @Scheduled(cron = "${schedule.birthday-gift.cron}", zone = "${timezone}")
     public void sendBirthdayGift() {
+        if (!enabled) {
+            return;
+        }
+
         log.info("BirthdayGiftTask!!!");
-//        log.info("Birthday gift amount: {}", birthdayPresentAmount.toString());
         LocalDate localDate = LocalDate.now();
         // по идее только id account-ов нужны а не полноценные User + UserAccount
         List<User> birthdayUsers = userRepository.findByBirthday(localDate.getDayOfMonth(), localDate.getMonthValue());
-//        log.info("Birthday users: {}", birthdayUsers);
         // добавить фильтрацию пользователей по дате регистрации?
         // (дарить деньги только тем кто зарегистрировался > 2 лет назад)
         for (User user : birthdayUsers) {
