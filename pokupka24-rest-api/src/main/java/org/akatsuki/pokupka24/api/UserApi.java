@@ -55,8 +55,4 @@ public interface UserApi {
     @PutMapping(RESOURCE_PATH + "/{userId}" + ACCOUNTS)
     ResponseEntity<UserAccountDTO> updateUserAccount(@PathVariable("userId") UUID userId,
                                                      @Valid @RequestBody UserAccountDTO accountDTO);
-
-    @Operation(summary = "Получение покупок пользователя")
-    @GetMapping(RESOURCE_PATH + "/{userId}/purchases")
-    ResponseEntity<List<PurchaseDTO>> findUserPurchases(@PathVariable("userId") UUID userId);
 }

@@ -3,13 +3,10 @@ package org.akatsuki.pokupka24.rest.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.akatsuki.pokupka24.api.UserApi;
-import org.akatsuki.pokupka24.domain.entity.Purchase;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
-import org.akatsuki.pokupka24.dto.PurchaseDTO;
 import org.akatsuki.pokupka24.dto.UserAccountDTO;
 import org.akatsuki.pokupka24.dto.UserDTO;
-import org.akatsuki.pokupka24.mapper.PurchaseMapper;
 import org.akatsuki.pokupka24.mapper.UserAccountMapper;
 import org.akatsuki.pokupka24.mapper.UserMapper;
 import org.akatsuki.pokupka24.service.UserService;
@@ -20,8 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -31,7 +26,6 @@ public class UserController implements UserApi {
     private final UserService userService;
     private final UserMapper userMapper;
     private final UserAccountMapper userAccountMapper;
-    private final PurchaseMapper purchaseMapper;
 
     @Override
     public ResponseEntity<Page<UserDTO>> findUsers(@ParameterObject Pageable pageable) {
@@ -67,11 +61,5 @@ public class UserController implements UserApi {
                                                             @Valid @RequestBody UserAccountDTO accountDTO) {
         UserAccount updatedAccount = userService.updateUserAccount(userId, userAccountMapper.toEntity(accountDTO));
         return ResponseEntity.ok(userAccountMapper.toDTO(updatedAccount));
-    }
-
-    @Override
-    public ResponseEntity<List<PurchaseDTO>> findUserPurchases(@PathVariable("userId") UUID userId) {
-        Set<Purchase> userPurchases = userService.findUserAccount(userId).getPurchases();
-        return ResponseEntity.ok(purchaseMapper.toDTOList(List.copyOf(userPurchases)));
     }
 }

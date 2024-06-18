@@ -10,8 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Покупки", description = "Операции по покупкам")
 //@RequestMapping(PurchaseApi.RESOURCE_PATH)
@@ -36,4 +40,8 @@ public interface PurchaseApi {
     @Operation(summary = "Добавить покупку")
     @PostMapping(value = RESOURCE_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<PurchaseDTO> addPurchase(@RequestBody PurchaseDTO purchaseDTO);
+
+    @Operation(summary = "Получение покупок пользователя")
+    @GetMapping(RESOURCE_PATH + "/{userId}/purchases")
+    ResponseEntity<List<PurchaseDTO>> findUserPurchases(@PathVariable("userId") UUID userId);
 }
