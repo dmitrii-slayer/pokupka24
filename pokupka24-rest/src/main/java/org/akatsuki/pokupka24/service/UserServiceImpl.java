@@ -1,10 +1,12 @@
 package org.akatsuki.pokupka24.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.akatsuki.pokupka24.domain.repository.UserAccountRepository;
 import org.akatsuki.pokupka24.domain.repository.UserRepository;
+import org.akatsuki.pokupka24.exception.InvalidMonetaryAmountException;
 import org.akatsuki.pokupka24.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -77,9 +79,14 @@ public class UserServiceImpl implements UserService {
         return userAccountRepository.save(account);
     }
 
-//    Lock ??
+    //    Lock or stricter transaction isolation??
+    // optimistic vs pessimistic lock(pessimistic_read and pessimistic_write)
+    // vs Isolation.REPEATABLE_READ vs SERIALIZABLE
     @Override
     public UserAccount addFunds(UUID accountId, BigDecimal addAmount) {
+        if (addAmount.compareTo(BigDecimal.ZERO) < 1) {
+            throw new InvalidMonetaryAmountException("The amount must be positive");
+        }
         UserAccount account = userAccountRepository.findById(accountId)
                 .orElseThrow(() -> new NotFoundException("No account with ID: " + accountId));
         BigDecimal newBalance = account.getBalance().add(addAmount);

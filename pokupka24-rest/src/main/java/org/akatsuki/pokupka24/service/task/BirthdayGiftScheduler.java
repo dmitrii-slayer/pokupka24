@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.repository.UserRepository;
+import org.akatsuki.pokupka24.exception.InvalidMonetaryAmountException;
 import org.akatsuki.pokupka24.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,6 +37,9 @@ public class BirthdayGiftScheduler {
         }
 
         log.info("BirthdayGiftTask!!!");
+        if (birthdayGiftAmount.compareTo(BigDecimal.ZERO) < 1) {
+            throw new InvalidMonetaryAmountException("The amount must be positive");
+        }
         LocalDate localDate = LocalDate.now();
         // по идее только id account-ов нужны а не полноценные User + UserAccount
         List<User> birthdayUsers = userRepository.findByBirthday(localDate.getDayOfMonth(), localDate.getMonthValue());
