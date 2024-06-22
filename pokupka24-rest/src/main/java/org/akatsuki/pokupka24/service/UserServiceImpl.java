@@ -1,7 +1,6 @@
 package org.akatsuki.pokupka24.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.akatsuki.pokupka24.domain.entity.User;
 import org.akatsuki.pokupka24.domain.entity.UserAccount;
 import org.akatsuki.pokupka24.domain.repository.UserAccountRepository;

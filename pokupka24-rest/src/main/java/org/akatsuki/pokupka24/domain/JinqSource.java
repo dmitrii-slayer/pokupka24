@@ -15,7 +15,7 @@ public class JinqSource {
 
     @PersistenceUnit
     public void setEntityManagerFactory(
-            EntityManagerFactory emf) throws Exception {
+            EntityManagerFactory emf) {
         streams = new JinqJPAStreamProvider(emf);
     }
 

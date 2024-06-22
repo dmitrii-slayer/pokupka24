@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.akatsuki.pokupka24.dto.PurchaseDTO;
 import org.akatsuki.pokupka24.dto.UserAccountDTO;
 import org.akatsuki.pokupka24.dto.UserDTO;
 import org.springdoc.core.annotations.ParameterObject;
@@ -14,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "Пользователи", description = "Операции по пользователям")
